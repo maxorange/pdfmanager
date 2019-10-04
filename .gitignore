@@ -1,5 +1,8 @@
 .DS_Store
 .env
 
+pdfmanager/tmp/*
+!pdfmanager/tmp/.keep
+
 __pycache__/
 db.sqlite3
