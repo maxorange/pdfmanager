@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+import tempfile
 from pdf2image import convert_from_path
 
 
@@ -9,9 +10,10 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 
-    images = convert_from_path('tmp/test.pdf')
-    for i, image in enumerate(images):
-        image.save(f'tmp/page{i:04}.png', 'png')
+    with tempfile.TemporaryDirectory() as path:
+        images = convert_from_path('tmp/test.pdf', output_folder=path)
+        for i, image in enumerate(images):
+            image.save(f'tmp/page{i:04}.png', 'png')
 
 
 def index(request):
